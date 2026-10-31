@@ -8,7 +8,7 @@ return  # Prevents F5 from running the whole file. Use F8 on a selection.
 #region Slide 5 - External Commands VS Native PowerShell
 Ping Loopback -a -n 1
 Test-Connection -count 1
-Shutdown /m \MS
+Shutdown /m \\MS
 Restart-Computer -ComputerName 'MS'
 Netsh interface ipv4 show addresses
 Get-NetIPAddress
