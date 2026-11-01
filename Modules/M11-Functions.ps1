@@ -90,6 +90,29 @@ Function My-Function
 }
 #endregion
 
+#region Slide 11 - Demonstration: Simple Function
+Function Write-Statement
+{
+  Write-Host "Hello world!" -ForegroundColor Green
+}
+Write-Statement
+
+Function Write-ServiceStatus
+{
+  $SVC = Get-Service -Name WinRM
+  $Name = $SVC.DisplayName
+  $Status = $SVC.Status
+  Write-Host "The Service $Name is currently $Status" -ForegroundColor Green
+}
+Write-ServiceStatus
+
+Function Get-SomeService
+{
+  Get-Service -Name WinRM
+}
+Get-SomeService
+#endregion
+
 #region Slide 14 - Add Parameters to a Function
 Function Write-Statement
 {
@@ -122,6 +145,51 @@ Function Write-ServiceStatus
 Write-ServiceStatus  -Service WinRM -Color Yellow
 #endregion
 
+#region Slide 17 - Demonstration: Parameters in Functions
+Function Write-Statement
+{
+  Param($Statement)
+  Write-Host $Statement -ForegroundColor Green
+}
+Write-Statement -Statement 'Hello World!'
+
+Function Write-Green
+{
+  Param($Statement = 'Good morning!')
+  Write-Host $Statement -ForegroundColor Green
+}
+Write-Green
+
+Function Write-ServiceStatus
+{
+  Param ($ServiceName,
+         $OutputColor = 'Green')
+  $SVC = Get-Service -Name $ServiceName
+  $Name = $SVC.DisplayName
+  $Status = $SVC.Status
+  Write-Host "The Service $Name is '$Status'" -ForegroundColor $OutputColor
+}
+# -Color does not match $OutputColor, so the text stays green
+Write-ServiceStatus -Service WinRM -Color Yellow
+
+Function Write-ServiceStatus
+{
+  Param ($Service,
+         $Color = 'Blue')
+  $SVC = Get-Service -Name $Service
+  Write-Host "The Service $($SVC.DisplayName) is currently $($SVC.Status)" -ForegroundColor $Color
+}
+# Same call, different parameter names: both bind this time
+Write-ServiceStatus -Service WinRM -Color Green
+
+Function Get-SomeService
+{
+  Param ($SVC)
+  Get-Service -Name $SVC
+}
+Get-SomeService WinRM
+#endregion
+
 #region Slide 22 - Script Blocks
 $ScriptBlock = {Get-Service -Name WinRM}
 $ScriptBlock
@@ -135,4 +203,17 @@ $ScriptBlock.Invoke()
 
 #region Slide 24 - Using Script Blocks
 Measure-Command -Expression {Get-Process}
+#endregion
+
+#region Slide 25 - Demonstration: Script Blocks
+Measure-Command -Expression {Get-Process}
+Measure-Command -Expression {Get-Process}
+$ScriptBlock = {Get-Service -Name WinRM}
+$ScriptBlock
+Invoke-Command -ScriptBlock $ScriptBlock
+$ScriptBlock.Invoke()
+& $ScriptBlock
+# Optional: each of the next two can take up to a minute
+Measure-Command { Get-ChildItem C:\Windows -Recurse -ErrorAction SilentlyContinue }
+Measure-Command { Get-ChildItem C:\Windows -Recurse -Filter *.log -ErrorAction SilentlyContinue }
 #endregion

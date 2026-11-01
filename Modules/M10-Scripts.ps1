@@ -12,6 +12,18 @@ Get-Counter '\Process(powershell_ise)\% Processor Time'
 C:\scripts\Sample.ps1
 #endregion
 
+#region Slide 7 - Demonstration: PowerShell Scripts
+New-Item -Path C:\Temp -ItemType Directory -Force | Out-Null
+# Run the next five lines together
+Set-Content -Path C:\Temp\TestScript.ps1 -Value @'
+Write-Host 'Start of script' -BackgroundColor Green
+Write-Host 'Display the % CPU Time utilization by the ISE' -BackgroundColor Green
+Get-Counter '\Process(powershell_ise)\% Processor Time'
+'@
+Get-Content -Path C:\Temp\TestScript.ps1
+C:\Temp\TestScript.ps1
+#endregion
+
 #region Slide 8 - Running Powershell Scripts
 c:\scripts\script.ps1
 .\script.ps1
@@ -24,10 +36,33 @@ Script.ps1
 .\ScriptParamExample.ps1 -ComputerName DoesNotExist
 #endregion
 
+#region Slide 10 - Demonstration: Running Scripts
+C:\Temp\TestScript.ps1
+Set-Location -Path C:\Temp
+.\TestScript.ps1
+# Fails on purpose: no .\ in front of the name
+TestScript.ps1
+explorer.exe C:\Temp
+# Back to C:\scripts for the later slides
+Set-Location -Path C:\scripts
+#endregion
+
 #region Slide 15 - Setting / Determining Execution Policy
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 Get-ExecutionPolicy -List
 Get-ExecutionPolicy
+#endregion
+
+#region Slide 16 - Demonstration: Execution Policy
+# Each line starts a new process with a policy for that process only (no admin, changes nothing)
+powershell.exe -NoProfile -ExecutionPolicy Restricted -File C:\Temp\TestScript.ps1
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File C:\scripts\Temp.ps1
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File C:\scripts\Downloaded.ps1
+powershell.exe -NoProfile -ExecutionPolicy AllSigned -File C:\scripts\Temp.ps1
+powershell.exe -NoProfile -ExecutionPolicy Restricted -Command 'Get-ExecutionPolicy -List'
+powershell.exe -NoProfile -ExecutionPolicy Restricted -Command 'Get-Date'
+Unblock-File -Path C:\scripts\Downloaded.ps1
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File C:\scripts\Downloaded.ps1
 #endregion
 
 #region Slide 19 - Certificates
@@ -76,6 +111,18 @@ Write-Host $result -ForegroundColor Green # Inline comment
 Get-ChildItem c:\ -Hidden
 # #requires -RunAsAdministrator
 Get-ChildItem c:\ -Hidden
+#endregion
+
+#region Slide 26 - Demonstration: Requires Statement
+$body = Get-Content -Path C:\Temp\TestScript.ps1
+Set-Content -Path C:\Temp\RequiresTest.ps1 -Value (@('#requires -RunAsAdministrator') + $body)
+C:\Temp\RequiresTest.ps1
+Set-Content -Path C:\Temp\RequiresTest.ps1 -Value (@('#requires -Version 5.1') + $body)
+C:\Temp\RequiresTest.ps1
+Set-Content -Path C:\Temp\RequiresTest.ps1 -Value (@('#requires -Version 10') + $body)
+C:\Temp\RequiresTest.ps1
+# Cleanup
+Remove-Item -Path C:\Temp\RequiresTest.ps1, C:\Temp\TestScript.ps1
 #endregion
 
 #region Slide 29 - Alias Overriding External Command

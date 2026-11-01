@@ -15,8 +15,25 @@ Get-ChildItem -?
 Get-Help Get-Counter -Parameter Counter
 #endregion
 
+#region Slide 11 - Demonstration: Get Help
+Get-Help Get-ChildItem
+Get-Help Get-Counter -Parameter Counter
+Get-Command Get-Counter -Syntax
+Get-Help Get-ChildItem -Examples
+# Pages the output: Space = next page, Enter = next line, Q = quit
+help Get-ChildItem
+#endregion
+
 #region Slide 17 - Concept Help in the Console
 Get-Help about_
+#endregion
+
+#region Slide 19 - Demonstration: Help About General Topics
+Get-Help about_*
+Get-Help about_Variables
+# Opens a separate window
+Get-Help about_Objects -ShowWindow
+Get-Help about_*array*
 #endregion
 
 #region Slide 23 - Update-Help Diagram (Internet Connected)
