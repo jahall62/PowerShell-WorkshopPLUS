@@ -6,18 +6,18 @@
 return  # Prevents F5 from running the whole file. Use F8 on a selection.
 
 #region Slide 8 - Determining Parameter Pipeline Input
-'Spooler' | Stop-Service
+'Spooler' | Stop-Service -WhatIf
 Get-Help -Name Stop-Service -Parameter Name
 #endregion
 
 #region Slide 9 - Pipeline Input ByValue
-'Spooler' | Stop-Service
+'Spooler' | Stop-Service -WhatIf
 Get-Help -Name Stop-Service -Parameter Name
 #endregion
 
 #region Slide 10 - Pipeline Input ByPropertyName
 $Object = [PSCustomObject]@{Name='Spooler'}
-$Object | Stop-Service
+$Object | Stop-Service -WhatIf
 Get-Member -InputObject $Object
 Get-Help -Name Stop-Service -Parameter Name
 #endregion

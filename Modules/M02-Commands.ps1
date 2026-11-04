@@ -40,7 +40,7 @@ Remove-Item -Path C:\Temp\TestFolder -Force
 #region Slide 9 - Native Command Examples
 Get-Process
 Restart-Service -Name Spooler
-Test-Connection -ComputerName 2012R2-MS -Count 1 -Quiet
+Test-Connection -ComputerName 127.0.0.1 -Count 1 -Quiet
 Get-Service -Name Bits
 #endregion
 
@@ -246,10 +246,10 @@ Get-Process @params
 #endregion
 
 #region Slide 51 - Aliases
-gci -Path C:\ -Recurse
-dir -Path C:\ -Recurse
+gci -Path C:\Scripts -Recurse
+dir -Path C:\Scripts -Recurse
 Get-ChildItem -Path C:\ -Recurse
-ls -Path C:\ -Recurse
+ls -Path C:\Scripts -Recurse
 #endregion
 
 #region Slide 52 - Listing all Aliases - Example

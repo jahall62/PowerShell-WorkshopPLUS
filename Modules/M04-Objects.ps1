@@ -7,6 +7,7 @@ return  # Prevents F5 from running the whole file. Use F8 on a selection.
 
 #region Slide 10 - Demonstration: PowerShell Objects
 Get-Service -Name Spooler
+(Get-Service -Name Spooler).
 (Get-Service -Name Spooler).Status
 (Get-Service -Name Spooler).DisplayName
 (Get-Service -Name Spooler).StartType
@@ -22,34 +23,35 @@ Get-Member -InputObject 'Some String'
 #endregion
 
 #region Slide 15 - Get-Member Property Definition
-Get-Member -InputObject (Get-Item C:\File.txt) -Name LastWriteTime
-(Get-Item C:\File.txt).LastWriteTime = (Get-Date)
-Get-Item C:\File.txt
+Get-Member -InputObject (Get-Item C:\Temp\File.txt) -Name LastWriteTime
+(Get-Item C:\Temp\File.txt).LastWriteTime = (Get-Date)
+Get-Item C:\Temp\File.txt
 #endregion
 
 #region Slide 16 - Get-Member Method Definition
-Get-Member -InputObject (Get-Item C:\File.txt) -Name CopyTo
-(Get-Item C:\File.txt).CopyTo("c:\Temp\File.txt", $True)
+Get-Member -InputObject (Get-Item C:\Temp\File.txt) -Name CopyTo
+(Get-Item C:\Temp\File.txt).CopyTo("C:\Temp\FileCopy.txt", $True)
 #endregion
 
 #region Slide 17 - Demonstration: GetType() and Get-Member
 # Setup: create the demo file
-New-Item -Path C:\Temp -ItemType Directory -Force | Out-Null
-Set-Content -Path C:\Temp\Demo.txt -Value 'Demo file for slide 17' -Force
-$File = Get-Item C:\Temp\Demo.txt
+New-Item -Path C:\Temp\TestFolder -ItemType Directory -Force | Out-Null
+Set-Content -Path C:\Temp\TestFolder\Demo.txt -Value 'Demo file for slide 17' -Force
+$File = Get-Item C:\Temp\TestFolder\Demo.txt
 $File.GetType()
 $File | Get-Member
 $File | Get-Member -Name IsReadOnly
 $File.IsReadOnly
 $File.IsReadOnly = $true
-(Get-Item C:\Temp\Demo.txt).IsReadOnly
-$File.CopyTo("C:\Temp\DemoCopy.txt", $true)
-$NewFile = $File.CopyTo("C:\Temp\DemoCopy2.txt", $true)
+$File = Get-Item C:\Temp\TestFolder\Demo.txt
+$File.IsReadOnly
+$File.CopyTo("C:\Temp\TestFolder\DemoCopy.txt", $true)
+$NewFile = $File.CopyTo("C:\Temp\TestFolder\DemoCopy2.txt", $true)
 $NewFile.FullName
 $NewFile.LastWriteTime
 $NewFile.GetType()
 # Cleanup: the files are read-only now, so -Force is needed
-Remove-Item -Path C:\Temp\Demo.txt, C:\Temp\DemoCopy*.txt -Force
+Remove-Item -Path C:\Temp\TestFolder\Demo.txt, C:\Temp\TestFolder\DemoCopy*.txt -Force
 #endregion
 
 #region Slide 20 - Variables Overview
@@ -63,12 +65,13 @@ $Greeting
 $Date = Get-Date
 $Date
 $Date | Get-Member
-$error
 # Run the next two lines together
 Get-Item C:\Nope -ErrorAction SilentlyContinue
+$error
 $?
 $null
 $pshome
+$home
 $true
 $host
 Get-Help about_Automatic_Variables -ShowWindow
@@ -111,7 +114,7 @@ $WriteProtected
 ($True).GetType().FullName
 ("Text").GetType()
 $Proc = Get-Process PowerShell
-$Proc.GetType() | FL Name, FullName
+$Proc.GetType() | Format-List Name, FullName
 #endregion
 
 #region Slide 31 - String Quotes

@@ -26,7 +26,7 @@ $Array = Get-Service
 $Array[1].Name
 $i = 1
 $Array[$i]
-$Array[1].Name = 'NotAJRouter'
+$Array[1].Name = 'NotADobe'
 $Array[1].Name
 $Array[$i].name
 #endregion

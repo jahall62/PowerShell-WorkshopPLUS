@@ -37,6 +37,9 @@ $Alias:Dir
 #region Slide 16 - Demonstration: Reading non-hierarchical providers
 $Env:COMPUTERNAME
 (Get-Item -Path Env:\COMPUTERNAME).Value
+$envVar = Get-Item -Path Env:\COMPUTERNAME
+$envVar. # Test dot notation
+(Get-Item -Path Env:\COMPUTERNAME).
 [System.Environment]::GetEnvironmentVariable('ComputerName')
 dir env:
 $env:Windir
@@ -109,3 +112,6 @@ Get-ItemPropertyValue -Path . -Name DemoSetting
 Set-Location C:\
 Remove-Item -Path HKCU:\Software\WorkshopDemo -Recurse
 #endregion
+
+
+Get-Command -Noun Item, ItemProperty, ChildItem, Location, Content, Path, PSDrive, PSProvider

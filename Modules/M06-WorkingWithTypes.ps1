@@ -127,7 +127,7 @@ Remove-Item Function:\Test-ParamsTypes -ErrorAction SilentlyContinue
 [math]::Round(3.14159265358979, 3)
 [math]::Round([math]::PI, 3)
 [datetime]::now.Month
-[datetime]::DaysInMonth(2024, 2)
+[datetime]::DaysInMonth(2026, 11)
 [datetime]::DaysInMonth([datetime]::Now.Year, [datetime]::now.Month)
 #endregion
 

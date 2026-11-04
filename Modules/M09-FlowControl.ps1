@@ -6,7 +6,7 @@
 return  # Prevents F5 from running the whole file. Use F8 on a selection.
 
 #region Slide 9 - If Statement Syntax
-$File = Get-Item .\MyFile.txt
+$File = Get-Item C:\Temp\small.txt   # Also try medium.txt, large.txt, jumbo.txt
 if($File.Length -lt 1kb)
 {
   Write-Host 'Less than 1kb!'
@@ -14,7 +14,7 @@ if($File.Length -lt 1kb)
 #endregion
 
 #region Slide 10 - Else Statement Syntax
-$File = Get-Item .\MyFile.txt
+$File = Get-Item C:\Temp\jumbo.txt   # Also try medium.txt, large.txt, jumbo.txt
 if($File.Length -lt 1kb)
 {
   Write-Host 'Less than 1kb!'
@@ -26,7 +26,7 @@ else
 #endregion
 
 #region Slide 11 - ElseIf Statement Syntax
-$File = Get-Item .\MyFile.txt
+$File = Get-Item C:\Temp\large.txt   # Also try medium.txt, large.txt, jumbo.txt
 if($File.Length -lt 1kb)
 {
   Write-Host 'Less than 1kb!'
@@ -42,7 +42,7 @@ elseif($File.Length -lt 1mb)
 #endregion
 
 #region Slide 12 - Full Statement Syntax
-$File = Get-Item .\MyFile.txt
+$File = Get-Item C:\Temp\jumbo.txt   # Also try medium.txt, large.txt, jumbo.txt
 if($File.Length -lt 1kb)
 {
   Write-Host 'Less than 1kb!'
@@ -128,7 +128,7 @@ if ((Get-Date).Year -ge 2017)
 #endregion
 
 #region Slide 16 - Switch Syntax
-$File = Get-Item .\MyFile.txt
+$File = Get-Item C:\Temp\large.txt   # Also try medium.txt, large.txt, jumbo.txt
 Switch($File)
 {
   {$File.Length -lt 1kb}
@@ -157,7 +157,7 @@ Switch($Files)
 
 #region Slide 18 - Demonstration: Switch
 # Switch compared with if. The comments show the matching if test
-$color = 'Green'
+$color = 'Red'
 switch ($color)
 {
     <# if ($color -eq 'Cyan') #>  'Cyan'  { Write-Host 'Cyan!' -ForegroundColor Cyan }

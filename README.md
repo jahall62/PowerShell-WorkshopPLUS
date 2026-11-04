@@ -36,6 +36,16 @@ Each script starts with `return`, so pressing **F5** by accident runs nothing. R
 
 The scripts also work in the Windows PowerShell ISE, where **F8** runs the selection in the same way. One exception: the `clean { }` block in M11 (Slide 10) needs PowerShell 7.3 or later.
 
+### M10 setup and cleanup
+
+In [M10-Scripts.ps1](Modules/M10-Scripts.ps1), select the entire **Setup** region and press **F8** before starting the slides. Use Windows PowerShell 5.1, preferably ISE for the ISE CPU-counter examples. Setup creates the supporting scripts in `C:\temp\Files`, resets the demo command bindings, and prepares execution policies. It stops if Group Policy controls execution policy.
+
+Setup replaces these named demo files; **Cleanup deletes them**: `Sample.ps1`, `script.ps1`, `my script.ps1`, `ScriptParamExample.ps1`, `Temp.ps1`, `Downloaded.ps1`, `TestScript.ps1`, `RequiresTest.ps1`, and `PowerShell_Cert.cer`. Other files in the folder are left alone. `Downloaded.ps1` is marked as Internet-origin for the execution-policy examples.
+
+Run the entire **Cleanup** region afterward, even if you stop partway through. Keep the same PowerShell session open: it holds the original policies, location, command bindings, and demo certificate reference. Cleanup removes the demo alias/function overrides, restores unrelated original bindings and the original Process/CurrentUser policies, and removes only the certificate created by this run, including its private key and CurrentUser trust entries. LocalMachine policies and certificate stores are not changed. Certificates left from older manual demos are not removed automatically.
+
+After cleanup, Setup can be run again. Running Setup twice without cleanup is blocked so the original settings are not lost. Cleanup can be retried if it reports an error; do not close the session until it succeeds.
+
 ### If a script won't run
 
 - **"running scripts is disabled on this system"**: the execution policy is blocking scripts. Running a selection with F8 still works. To see the current policy, run `Get-ExecutionPolicy -List`.
