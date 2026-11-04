@@ -8,6 +8,7 @@ return  # Prevents F5 from running the whole file. Use F8 on a selection.
 #region Slide 19 - Comments
 #Single line comments
 Write-Host "Hello world" #Inline comment
+gci | % { $_.Name }
 <#
     Block comment
     over multiple lines
