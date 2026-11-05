@@ -38,6 +38,8 @@ return  # Prevents F5 from running the whole file. Use F8 on a selection.
     }
     $global:PSModuleAutoLoadingPreference = 'All'
     $repos = @(Get-PSRepository).Name
+    # Get-PSRepository just loaded the PowerShellGet that Install-Module will use on slide 16
+    $psget = (Get-Module -Name PowerShellGet).Version
     # Unload so slide 7 shows BitLocker arriving and slide 10's deliberate failures really fail.
     # PowerShellGet and PackageManagement were just loaded by Get-PSRepository; unload them so Get-Module matches the slide
     Remove-Module -Name ($M12DemoState.Modules + 'PowerShellGet', 'PackageManagement') -ErrorAction SilentlyContinue
@@ -55,6 +57,10 @@ return  # Prevents F5 from running the whole file. Use F8 on a selection.
     }
     if ('PSGallery' -notin $repos) {
         Write-Warning "PSGallery isn't registered here. Find-Module and Install-Module will use: $($repos -join ', ')"
+    }
+    if ($psget -lt [version]'2.0') {
+        Write-Warning ("PowerShellGet $psget installs PSProfiler into a 1.0.5 folder, but its manifest says 1.0.5.0, so 5.1 won't import it. " +
+            'To fix: run Cleanup, run Install-Module PowerShellGet -Scope CurrentUser -Force, then rerun Setup in a new session.')
     }
     $admin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole('Administrators')
     if (-not $admin) {
